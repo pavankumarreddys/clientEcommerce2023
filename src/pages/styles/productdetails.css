@@ -1,0 +1,242 @@
+:root {
+	--hue: 223;
+	--bg: hsl(var(--hue),10%,90%);
+	--fg: hsl(var(--hue),10%,10%);
+	--primary: hsl(var(--hue),90%,55%);
+	--trans-dur: 0.3s;
+}
+
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.details-main-container{
+    background-color: rgba(128, 128, 128, 0.097);
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+    border-radius: 5px;
+    min-height: 78vh;
+	box-shadow: 2px 2px 20px 2px;
+	padding: 15px;
+	background-image: linear-gradient(#fffcdc,#d9a7c7);
+}
+@media screen and (min-width:1250px){
+    .details-main-container{
+        min-height: 75vh;
+    }
+}
+.loder-main-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.preloader {
+	text-align: center;
+	max-width: 20em;
+	width: 100%;
+}
+.preloader__text {
+	position: relative;
+	height: 1.5em;
+}
+.preloader__msg {
+	animation: msg 0.3s 13.7s linear forwards;
+	position: absolute;
+	width: 100%;
+}
+.preloader__msg--last {
+	animation-direction: reverse;
+	animation-delay: 14s;
+	visibility: hidden;
+}
+.cart {
+	display: block;
+	margin: 0 auto 1.5em auto;
+	width: 8em;
+	height: 8em;
+}
+.cart__lines,
+.cart__top,
+.cart__wheel1,
+.cart__wheel2,
+.cart__wheel-stroke {
+	animation: cartLines 2s ease-in-out infinite;
+}
+.cart__lines {
+	stroke: var(--primary);
+}
+.cart__top {
+	animation-name: cartTop;
+}
+.cart__wheel1 {
+	animation-name: cartWheel1;
+	transform: rotate(-0.25turn);
+	transform-origin: 43px 111px;
+}
+.cart__wheel2 {
+	animation-name: cartWheel2;
+	transform: rotate(0.25turn);
+	transform-origin: 102px 111px;
+}
+.cart__wheel-stroke {
+	animation-name: cartWheelStroke
+}
+.cart__track {
+	stroke: hsla(var(--hue),10%,10%,0.1);
+	transition: stroke var(--trans-dur);
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: hsl(var(--hue),10%,10%);
+		--fg: hsl(var(--hue),10%,90%);
+	}
+	.cart__track {
+		stroke: hsla(var(--hue),10%,90%,0.1);
+	}
+}
+
+/* Animations */
+@keyframes msg {
+	from {
+		opacity: 1;
+		visibility: visible;
+	}
+	99.9% {
+		opacity: 0;
+		visibility: visible;
+	}
+	to {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+@keyframes cartLines {
+	from,
+	to {
+		opacity: 0;
+	}
+	8%,
+	92% {
+		opacity: 1;
+	}
+}
+@keyframes cartTop {
+	from {
+		stroke-dashoffset: -338;
+	}
+	50% {
+		stroke-dashoffset: 0;
+	}
+	to {
+		stroke-dashoffset: 338;
+	}
+}
+@keyframes cartWheel1 {
+	from {
+		transform: rotate(-0.25turn);
+	}
+	to {
+		transform: rotate(2.75turn);
+	}
+}
+@keyframes cartWheel2 {
+	from {
+		transform: rotate(0.25turn);
+	}
+	to {
+		transform: rotate(3.25turn);
+	}
+}
+@keyframes cartWheelStroke {
+	from,
+	to {
+		stroke-dashoffset: 81.68;
+	}
+	50% {
+		stroke-dashoffset: 40.84;
+	}
+}
+
+
+.image-container{
+	height: 419px !important;
+	width: 100% !important;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.image-uniq{
+	height: 100%;
+	width: 100%;
+	border-radius: 10px !important;
+}
+.image-single{
+	height: 50%;
+	width: 100%;
+	border-radius: 10px !important;
+}
+
+.detail-grid-container {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: auto auto auto auto;
+	padding: 10px;
+	flex-wrap: wrap;
+  }
+  
+@media screen and (max-width:576px){
+	.detail-grid-container {
+		display: grid;
+		gap: 10px;
+		grid-template-columns: auto;
+		padding: 10px;
+		flex-wrap: wrap;
+	  }
+}
+
+@media (min-width:576px) and (max-width:876px){
+	.detail-grid-container {
+		display: grid;
+		gap: 10px;
+		grid-template-columns: auto auto;
+		padding: 10px;
+		flex-wrap: wrap;
+	  }
+}
+  .detail-grid-item {
+	padding: 20px;
+	font-size: 30px;
+	text-align: center;
+  }
+
+  .product-title{
+	font-size: 36px;
+	font-weight: bold;
+	color: rgb(25, 25, 25);
+	font-family:  Roboto, sans-serif;
+  }
+  .product-description{
+	font-size: 18px;
+	font-weight: 200;
+	color: rgb(110, 107, 107);
+	font-family:  Roboto, sans-serif;
+  }
+  .product-price{
+	color: green;
+	font-size: 30px;
+	font-weight: 700;
+  }
+
+  .control-my-all{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  }
