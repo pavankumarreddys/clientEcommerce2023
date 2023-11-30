@@ -60,3 +60,9 @@
   .forgot-btn:hover {
     color: white !important;
   }
+
+  .input-checkbox{
+    height: 15px;
+    width:15px;
+    margin-top: 3px;
+  }

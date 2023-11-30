@@ -8,3 +8,225 @@
 	padding: 15px;
 	background-image: linear-gradient(#fffcdc,#d9a7c7);
 }
+.all-items-container {
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+.all-items-container::-webkit-scrollbar {
+  width: 7px; /* width of the scrollbar */
+}
+
+.all-items-container::-webkit-scrollbar-thumb {
+  background-color: #888; /* color of the thumb */
+  background-color: rgba(128, 128, 128, 0.097);
+  
+  border-radius: 6px; /* rounded corners */
+}
+
+.all-items-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* color of the track */
+  background-color: rgba(128, 128, 128, 0.097);
+
+}
+
+.cart-list {
+    padding-left: 0px;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 5%;
+    margin-bottom: 16px;
+    box-shadow: 5px 4px 16px 0px #2c2c2c;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .cart-item {
+      margin-bottom: 32px;
+    }
+  }
+  
+  @media screen and (min-width: 768px) {
+    .cart-item {
+      padding-left: 36px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+      padding-right: 48px;
+    }
+  }
+  
+  .cart-product-image {
+    width: 96px;
+    height: 96px;
+    border-radius: 4px;
+  }
+  
+  .cart-item-details-container {
+    margin-left: 16px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .cart-item-details-container {
+      display: flex;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+  }
+  
+  @media screen and (min-width: 768px) {
+    .cart-product-title-brand-container {
+      width: 250px;
+    }
+  }
+  
+  .cart-product-title {
+    color: #171f46;
+    font-family: 'Roboto';
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .cart-product-title {
+      font-size: 16px;
+    }
+  }
+  
+  .cart-product-brand {
+    color: #64748b;
+    font-family: 'Roboto';
+    font-size: 10px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .cart-product-brand {
+      font-size: 12px;
+    }
+  }
+  
+  .cart-quantity-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantity-controller-button {
+    padding: 0;
+  }
+  
+  .cart-quantity {
+    color: #52606d;
+    font-family: 'Roboto';
+    font-size: 12px;
+    font-weight: 500;
+    margin: 8px;
+    line-height: 1.3;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .cart-quantity {
+      font-size: 18px;
+      margin-left: 16px;
+      margin-right: 16px;
+    }
+  }
+  
+  .total-price-remove-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cart-total-price {
+    color: #0b69ff;
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 0;
+    min-width: 100px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .cart-total-price {
+      font-size: 18px;
+    }
+  }
+  
+  .remove-button {
+    background-color: transparent;
+    color: #334155;
+    font-family: 'Roboto';
+    font-size: 10px;
+    line-height: 16px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .remove-button {
+      display: none;
+    }
+  }
+  
+  .delete-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 32px;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .delete-button {
+      display: none;
+    }
+  }
+
+.billing-container{
+  background-color: rgba(128, 128, 128, 0.097);
+}
+
+
+.shop-now-btn {
+  background-color: #0b69ff;
+  color: #ffffff;
+  font-family: 'Roboto';
+  font-size: 12px;
+  border-radius: 8px;
+  border: none;
+  padding-left: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 16px;
+  outline: none;
+  cursor: pointer;
+}
+.my-cart-heading{
+  font-weight: 700;
+  color: #171f46;
+  font-size: 30px;
+}
+  .order-total-head{
+    color: gray;
+    font-weight: 400;
+  }
+
+  .order-bill{
+    font-weight: 400;
+  }
+  .order-bill-strike{
+    text-decoration: line-through !important;
+    color: black;
+  }
+  .order-total-head-span{
+    font-weight: bold;
+    font-size: 26px;
+    color: green;
+  }
+

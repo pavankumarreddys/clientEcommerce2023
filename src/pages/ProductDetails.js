@@ -1,4 +1,4 @@
-import {NavLink,Link} from 'react-router-dom'
+import {useNavigate,useLocation} from 'react-router-dom'
 import React, {useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,8 @@ import Button from '@mui/material/Button';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BoltOutlinedIcon from '@mui/icons-material/BoltOutlined';
 import toast from "react-hot-toast";
+import axios from "axios";
+import CommonButton from '../components/CommonButton/CommonButton';
 
 const labels = {
   0.5: 'Useless',
@@ -32,19 +34,28 @@ const ProductDetails = () => {
   let { id } = useParams();
   const [isLoading,setIsLoading] = useState(true)
   const [allProducts,setAllProducts] = useState([])
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+  const navigate = useNavigate()
   let dispatch = useDispatch()
   let data1 = useSelector((state)=>{
     return state
   })
+  var token = localStorage.getItem("userToken");
+  var userid = localStorage.getItem('userid')
+
+  const currentLocation = useLocation()
 
   async function data(){
     setIsLoading(true)
     try{
-      const resp = await fetch('https://dummyjson.com/products')
+      const resp = await fetch(`${process.env.REACT_APP_API}/api/v1/newproduct/getallnewproducts`)
       const data = await resp.json()
       if(data){
-        const filterData = data.products.filter((each)=> each.id === parseInt(id))
-          setAllProducts(filterData[0])
+        const filterData = data.products.filter((each)=> each.id === id)
+        console.log("filter0000",filterData)
+          
+        setAllProducts(filterData[0])
           setIsLoading(false)
       }else{
           setIsLoading(true)
@@ -55,14 +66,16 @@ const ProductDetails = () => {
     }
     
 
-  }
-  
+  } 
 
   useEffect(()=>{
-    const len = data1.allProducts
-      if(len.length>0){
+    const reduxStoreData = data1.allProducts
+    console.log("reduxdata",reduxStoreData)
+    console.log("id",id)
+      if(reduxStoreData?.length >0){
         setIsLoading(false)
-        const filterData = data1.allProducts.filter((each)=> each.id === parseInt(id))
+        const filterData = reduxStoreData.filter((each)=> each.id === id)
+        console.log("filter",filterData)
         setAllProducts(filterData[0])
       }
       else{
@@ -124,29 +137,95 @@ const ProductDetails = () => {
     )
   }
 
-  const addToCartTriggered = () => {
-    const prevData = data1.cartListData;
+  const storeDataDbCall = async () => {
+    try {
+      if (!token && userid) {
+        toast.success("Please Login");
+        setTimeout(() => {
+          navigate('/login')
+        }, 1000);
+
+        // Handle the absence of a token, e.g., redirect to login.
+      }else{
+        setIsButtonClicked(true)
+        const { brand, price,discountPercentage: discount, rating,id, stock, title, thumbnail } = allProducts;
+      const quantity = 1;
   
-    // Check if the product with the same ID already exists
-    const isProductExists = prevData.some(product => product.id === allProducts.id);
-  
-    if (!isProductExists) {
-      const allData = [...prevData, allProducts];
-      localStorage.setItem("cartProducts",JSON.stringify(allProducts))
-      console.log("allData", allData);
-      dispatch({ type: "cartItems", payload: allData });
-      toast.success("Product Added Successfully");
-    } else {
-      toast.error("Product is already in the cart");
+      const response = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/cart/mycart`,
+        {
+          userid,
+          brand,
+          price,
+          discount,
+          rating,
+          id,
+          quantity,
+          stock,
+          title,
+          thumbnail,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response && response?.data?.success){
+          toast.success(response.data && response.data.message);
+          setIsButtonClicked(false)
+          return true
+        }else{
+          toast.error("Something went wrong Please try again!");
+          setIsButtonClicked(false)
+          return false
+        }
+
+    }
+
+    } catch (error) {
+      console.error("Error storing data:", error.message);
+      // Handle errors, e.g., show an error message to the user.
     }
   };
   
-  
 
+  const addToCartTriggered = async () => {
+        //const isLogin  = data1.isUserLogin
+        if (!token) {
+          toast.success("Please Login");
+            navigate('/login')
+            return 
+        }
+        const prevData = data1.cartListData
+        console.log("prevSdata",prevData)
+        // Check if the product with the same ID already exists
+        const isProductExists = prevData.some(product => product.id === allProducts.id);
+        if (!isProductExists) {
+          const allData = [...prevData, allProducts];
+        
+          const addDataIntoDb = await storeDataDbCall();
+          if(addDataIntoDb){
+            dispatch({ type: "cartItems", payload: allData });
+          }
+        } else {
+          toast.error("Product is already in the cart");
+        }
+      
+  };
+
+  
+  const callCheckout = () =>{
+    console.log("currentLocation",currentLocation)
+    localStorage.setItem('currentLocation',currentLocation.pathname)
+    navigate("/checkout")
+  }
+  
+  console.log("allProducts",allProducts)
   return (
     <Layout title={"Product-details E-commerce app"}>
         <div className='container row m-auto details-main-container animate__animated animate__fadeInRight'>
-            {isLoading?
+            {isLoading || allProducts?.length<1?
             <div className='col-12 h-100 loder-main-container' style={{ minHeight: "90vh" }}>
                 {getLoader()}
             </div>
@@ -157,15 +236,18 @@ const ProductDetails = () => {
                 <img className="image-uniq" src={allProducts.thumbnail}/>
               </div>
               <div className='mt-2 p-2 d-flex justify-content-between'>
-              <Button onClick={addToCartTriggered} variant="contained" endIcon={<ShoppingCartIcon />}>
+              <Button  className={isButtonClicked?'rotate-button':''} onClick={addToCartTriggered} variant="contained" endIcon={<ShoppingCartIcon />}>
                 Add Cart
               </Button>
-              <Button variant="contained" color="success" endIcon={<BoltOutlinedIcon />}>
+            
+
+              <Button onClick={callCheckout} variant="contained" color="success" endIcon={<BoltOutlinedIcon />}>
                 Buy now
               </Button>
               </div>
             </div>
             <div className='col-12 col-lg-8 '>
+
               <h1 className='product-title'>{allProducts.title}</h1>
               <p className='product-description'>{allProducts.description}</p>
 
@@ -217,9 +299,9 @@ const ProductDetails = () => {
               <h3>Similar Products</h3>
             </div>
             <div className='col-12 detail-grid-container '>
-              {allProducts.images.map((img,index)=>(
+              {allProducts?.images?.map((img,index)=>(
                 <div key={index}  className ="detail-grid-item">
-                <img className={allProducts.images.length>1?"image-uniq":"image-single"} src={img}/>
+                <img alt="similar-pic" className={allProducts.images.length>1?"image-uniq":"image-single"} src={img}/>
                 </div>
               ))}
             </div>
@@ -231,3 +313,5 @@ const ProductDetails = () => {
 }
 
 export default ProductDetails;
+
+  

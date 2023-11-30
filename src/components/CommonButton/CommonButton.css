@@ -1,0 +1,96 @@
+body.pavan {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #000;
+  }
+  
+  h3.pavan {
+    color: rgba(255, 255, 255, 0.5);
+    font-family: "Courier New", Courier, monospace;
+  }
+  
+  .submit-pavan {
+    cursor: pointer;
+    position: relative;
+    padding: 10px 20px;
+    font-size: 36px;
+    width: 250px;
+    border-radius: 4px;
+    background: transparent;
+    color: white;
+    border: 2px solid;
+    transition: width 0.5s;
+  }
+  
+  .process-pavan {
+    width: 300px;
+    box-shadow: 
+      0px 1px 10px #0a990a,
+      0px 2px 15px #990a0a,
+      0px 3px 20px #0a0a99,
+      -1px 1px 25px #0a990a,
+      -1px 2px 30px #990a0a,
+      -1px 3px 35px #0a0a99;
+  }
+  
+  .process-pavan::before {
+    content: ' ';
+    position: absolute;
+    background-color: #3bb78f;
+    background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 0%;
+    animation: processing-pavan 5s;
+    border-radius: 4px;
+    z-index: -1;
+  }
+  
+  .tick-pavan {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    opacity: 1;
+    transition: left 2s;
+  }
+  
+  .submitted-pavan {
+    padding-left: 40px;
+    animation: tick-pavan 0.6s;
+    background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
+    box-shadow: 
+      0px 1px 10px #0a990a,
+      0px 2px 15px #990a0a,
+      0px 3px 20px #0a0a99,
+      -1px 1px 25px #0a990a,
+      -1px 2px 30px #990a0a,
+      -1px 3px 35px #0a0a99;
+  }
+  
+  @keyframes processing-pavan {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  @keyframes tick-pavan {
+    0% {
+      transform: scale(0.1);
+    }
+  
+    75% {
+      transform: scale(1.2);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
+  }
+  

@@ -22,9 +22,11 @@ export default function DailogBox(props) {
 
   const handleClose = () => {
     setOpen(false);
+    localStorage.setItem('otdisplay',true)
     navigate("/login")
   };
   const handleCrossClose = () => {
+    localStorage.setItem('otdisplay',true)
     setOpen(false);
   };
 

@@ -1,0 +1,29 @@
+.admin-main-container{
+    background-color: rgba(128, 128, 128, 0.097);
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+    border-radius: 5px;
+    min-height: 78vh;
+	box-shadow: 2px 2px 20px 2px;
+	padding: 15px;
+	background-image: linear-gradient(#fffcdc,#d9a7c7);
+}
+
+.side-bar{
+  background-color: rgba(128, 128, 128, 0.097);
+
+}
+.admin-side-name{
+    padding-top: 5px;
+    font-weight: 500;
+    color: gray;
+    cursor: pointer;
+}
+.admin-side-name:focus{
+    background-color: #3b82f6;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 5px 6px 2px 0px gray;
+
+}
